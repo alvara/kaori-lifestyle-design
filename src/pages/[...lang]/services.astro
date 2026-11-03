@@ -1,0 +1,55 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import { load, href, langPaths, type Lang } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const c = load(lang, 'services');
+const site = load(lang, 'site');
+---
+<Base lang={lang} route="/services" title={site.nav.services}>
+  <section class="page-masthead services-masthead">
+    <div class="container-wide page-masthead-content">
+      <p class="eyebrow">{c.masthead.eyebrow}</p>
+      <p class="japanese mt-5">{c.masthead.japanese}</p>
+      <h1 class="display-xl mt-8">{c.masthead.heading}</h1>
+    </div>
+  </section>
+  <section class="services section-pad">
+    <div class="container-wide services-page-grid">
+      <div class="services-intro">
+        <p class="eyebrow">{c.intro.eyebrow}</p>
+        <Paragraphs text={c.intro.body} firstClass="mt-6" />
+      </div>
+      <div class="service-list">
+        {c.services.map((s: any) => (
+          <article class="service-row service-static-row">
+            <h2 class="service-name">{s.name}</h2>
+            <div class="service-detail">
+              <Paragraphs text={s.description} />
+              {s.examples?.length > 0 && <ul class="service-examples">{s.examples.map((e: string) => <li>{e}</li>)}</ul>}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+  <section class="service-notes section-pad">
+    <div class="container-wide service-notes-grid">
+      <div>
+        <p class="eyebrow">{c.pricing.eyebrow}</p>
+        <h2 class="display-md mt-6">{c.pricing.heading}</h2>
+      </div>
+      <div class="service-note-copy">
+        <dl class="service-price-list">
+          {c.pricing.prices.map((p: any) => (
+            <div class="service-price-row"><dt>{p.label}</dt><dd>{p.price}</dd></div>
+          ))}
+        </dl>
+        <div class="service-pricing-explanation"><Paragraphs text={c.pricing.explanation} /></div>
+        <a href={href('/contact', lang)} class="button button-dark mt-8">{c.pricing.button}<Arrow /></a>
+      </div>
+    </div>
+  </section>
+</Base>

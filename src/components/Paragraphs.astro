@@ -1,0 +1,12 @@
+---
+// Renders editor text: blank line = new <p>, newline = <br>.
+import { paragraphs } from '../lib/content';
+interface Props { text?: string; class?: string; firstClass?: string; restClass?: string }
+const { text, class: cls, firstClass, restClass } = Astro.props;
+const paras = paragraphs(text);
+---
+{paras.map((lines, i) => (
+  <p class:list={[cls, i === 0 ? firstClass : restClass]}>
+    {lines.map((l, j) => (<>{j > 0 && <br />}{l}</>))}
+  </p>
+))}

@@ -1,0 +1,91 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import JapaneseCopy from '../../components/JapaneseCopy.astro';
+import { load, href, asset, langPaths, type Lang } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const c = load(lang, 'home');
+const ja = lang === 'ja';
+const alts = ja
+  ? { mind: '日差しの入る木のテーブルに置かれたノートとペン、観葉植物、水のグラス。', body: '明るいリビングでヨガをする女性。', space: '大きな窓と植物、明るい木の家具があるリビング。' }
+  : { mind: 'An open notebook and pen on a sunlit wooden table, with a plant and glass of water.', body: 'A woman practicing yoga in a bright, sunlit living room.', space: 'A bright living room with large windows, plants, and light wood furniture.' };
+const cards = [
+  ['Mind', 'mind', 'kaori-mind-card.webp'],
+  ['Body', 'body', 'kaori-body-card.webp'],
+  ['Space', 'space', 'kaori-space-card.webp'],
+] as const;
+---
+<Base lang={lang} route="/" mainId="top">
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container-wide hero-content w-full">
+      <h1 id="hero-title" class="display-xl hero-title max-w-5xl reveal delay-1">{c.hero.title_line_1}<br />{c.hero.title_line_2}{ja ? '' : ' '}<em>{c.hero.title_emphasis}</em></h1>
+      <div class="hero-actions mt-10 reveal delay-2">
+        {ja
+          ? <JapaneseCopy text={c.hero.note} class="hero-note hero-note-ja" />
+          : <p class="hero-note whitespace-pre-line" lang="en">{c.hero.note}</p>}
+        <a href={href('/contact', lang)} class="button button-light">{c.hero.button}<Arrow /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-pad">
+    <div class="container-wide">
+      <div class="intro-grid">
+        <div>
+          <p class="eyebrow section-label">{c.intro.eyebrow}</p>
+          <p class="japanese mt-5">{c.intro.japanese}</p>
+        </div>
+        <div class="intro-copy">
+          {c.intro.heading && <h2 class="display-md">{c.intro.heading}</h2>}
+          {ja
+            ? <JapaneseCopy text={c.intro.body} class="home-japanese-copy" />
+            : (
+              <div class="mt-8 grid gap-6 md:grid-cols-[1fr_.65fr]">
+                <p class="whitespace-pre-line" lang="en">{c.intro.body}</p>
+                {c.intro.quote && <p class="accent-quote" lang="en">{c.intro.quote}</p>}
+              </div>
+            )}
+          {c.intro.button && <a href={href('/philosophy', lang)} class="button button-dark mt-10">{c.intro.button}<Arrow kind="down-right" /></a>}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="philosophy section-pad home-philosophy">
+    <div class="container-wide relative z-[1] home-principles" aria-label={ja ? 'Mind、Body、Space' : 'Mind, Body, Space'}>
+      {cards.map(([title, key, img]) => (
+        <article class="home-principle">
+          <h3 class="principle-title">{title}</h3>
+          <figure class="home-principle-photo"><img alt={alts[key]} src={asset(`images/${img}`)} loading="lazy" /></figure>
+          <p class="principle-copy">{c.principles[key]}</p>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="home-story section-pad">
+    <div class="container-wide story-grid">
+      <div class="story-aside">
+        <p class="eyebrow">{c.story.eyebrow}</p>
+        <p class="mt-6">{c.story.aside}</p>
+      </div>
+      <div class="story-copy">
+        <h2 class="display-md">{c.story.heading}</h2>
+        <Paragraphs text={c.story.body} firstClass="mt-8" />
+        <a href={href('/about', lang)} class="button button-dark mt-8">{c.story.button}<Arrow /></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact home-contact-cta">
+    <div class="container-wide home-cta-inner">
+      <div>
+        <p class="eyebrow">{c.cta.eyebrow}</p>
+        <h2 class="contact-lead mt-5">{c.cta.heading}</h2>
+      </div>
+      <a href={href('/contact', lang)} class="button button-light">{c.cta.button}<Arrow /></a>
+    </div>
+  </section>
+</Base>

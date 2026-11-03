@@ -1,0 +1,254 @@
+# Pages CMS configuration (https://pagescms.org/docs/configuration/).
+# Kaori signs in at https://app.pagescms.org with GitHub, picks this repo,
+# and edits the copy below through forms. Each save is a commit to main,
+# which triggers .github/workflows/deploy.yml and republishes the site.
+#
+# Copy only: images and layout stay in code. Each page has one English and
+# one Japanese file with the same shape, so the field lists are shared with
+# YAML anchors (&name / *name).
+#
+# Text conventions the templates understand (see src/lib/content.ts):
+#   - A blank line starts a new paragraph. A single newline is a line break.
+#   - On the Japanese home page, a paragraph written as **text** becomes
+#     the highlighted English concept line (Mind × Body × Space).
+#   - Leaving an optional field empty hides that element.
+
+content:
+  # ---------------------------------------------------------------- Site
+  - name: site_en
+    label: "Site-wide: header & footer (English)"
+    type: file
+    path: content/en/site.yml
+    fields: &site_fields
+      - { name: meta_title, label: Browser tab title, type: string }
+      - { name: meta_description, label: Search engine description, type: text }
+      - { name: brand_name, label: Logo name, type: string }
+      - { name: brand_mark, label: Logo subtitle, type: string }
+      - { name: brand_tagline, label: Logo tagline, type: string }
+      - name: nav
+        label: Menu labels
+        type: object
+        fields:
+          - { name: home, label: Home, type: string }
+          - { name: philosophy, label: Philosophy, type: string }
+          - { name: about, label: About, type: string }
+          - { name: services, label: Services, type: string }
+          - { name: contact, label: Contact, type: string }
+      - name: footer
+        label: Footer
+        type: object
+        fields:
+          - { name: name, label: Business name, type: string }
+          - { name: concept, label: Concept line, type: string }
+          - { name: locations, label: Locations, type: string }
+  - name: site_ja
+    label: "Site-wide: header & footer (日本語)"
+    type: file
+    path: content/ja/site.yml
+    fields: *site_fields
+
+  # ---------------------------------------------------------------- Home
+  - name: home_en
+    label: Home (English)
+    type: file
+    path: content/en/home.yml
+    fields: &home_fields
+      - name: hero
+        label: Top banner
+        type: object
+        fields:
+          - { name: title_line_1, label: Title line 1, type: string }
+          - { name: title_line_2, label: Title line 2, type: string }
+          - { name: title_emphasis, label: Title highlighted word (end of line 2), type: string }
+          - { name: note, label: Intro text, type: text }
+          - { name: button, label: Button, type: string }
+      - name: intro
+        label: Approach section
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: japanese, label: Japanese accent line, type: string }
+          - { name: heading, label: Heading (optional), type: string }
+          - { name: body, label: Text, type: text }
+          - { name: quote, label: Side quote (optional), type: string }
+          - { name: button, label: Button (optional), type: string }
+      - name: principles
+        label: Mind / Body / Space cards
+        type: object
+        fields:
+          - { name: mind, label: Mind, type: text }
+          - { name: body, label: Body, type: text }
+          - { name: space, label: Space, type: text }
+      - name: story
+        label: My story section
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: aside, label: Side line, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - { name: button, label: Button, type: string }
+      - name: cta
+        label: Bottom call to action
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: button, label: Button, type: string }
+  - name: home_ja
+    label: Home (日本語)
+    type: file
+    path: content/ja/home.yml
+    fields: *home_fields
+
+  # ---------------------------------------------------------- Philosophy
+  - name: philosophy_en
+    label: Philosophy (English)
+    type: file
+    path: content/en/philosophy.yml
+    fields: &philosophy_fields
+      - name: masthead
+        label: Top banner
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: japanese, label: Japanese accent line, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: lead, label: Intro text, type: text }
+      - name: intro
+        label: Wider view section
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+      - name: principles
+        label: Mind / Body / Space
+        type: object
+        fields:
+          - { name: mind_japanese, label: Mind accent line, type: string }
+          - { name: mind, label: Mind text, type: text }
+          - { name: body_japanese, label: Body accent line, type: string }
+          - { name: body, label: Body text, type: text }
+          - { name: space_japanese, label: Space accent line, type: string }
+          - { name: space, label: Space text, type: text }
+  - name: philosophy_ja
+    label: Philosophy (日本語)
+    type: file
+    path: content/ja/philosophy.yml
+    fields: *philosophy_fields
+
+  # --------------------------------------------------------------- About
+  - name: about_en
+    label: About (English)
+    type: file
+    path: content/en/about.yml
+    fields: &about_fields
+      - name: masthead
+        label: Top banner
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: japanese, label: Japanese accent line, type: string }
+          - { name: heading, label: Heading, type: string }
+      - { name: portrait_alt, label: Portrait description (for screen readers), type: string }
+      - { name: portrait_caption, label: Portrait caption, type: string }
+      - name: story
+        label: About me section
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: body, label: Text, type: text }
+          - { name: signature, label: Signature, type: string }
+      - name: mindful
+        label: Mindful living section
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: japanese, label: Japanese accent line, type: string }
+          - { name: heading, label: Heading, type: string }
+          - { name: body, label: Text, type: text }
+          - { name: button, label: Button, type: string }
+          - { name: side_notes, label: Side notes, type: string, list: true }
+  - name: about_ja
+    label: About (日本語)
+    type: file
+    path: content/ja/about.yml
+    fields: *about_fields
+
+  # ------------------------------------------------------------ Services
+  - name: services_en
+    label: Services & pricing (English)
+    type: file
+    path: content/en/services.yml
+    fields: &services_fields
+      - name: masthead
+        label: Top banner
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: japanese, label: Japanese accent line, type: string }
+          - { name: heading, label: Heading, type: string }
+      - name: intro
+        label: Intro
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: body, label: Text, type: text }
+      - name: services
+        label: Services
+        type: object
+        list: true
+        fields:
+          - { name: name, label: Service name, type: string }
+          - { name: description, label: Description, type: text }
+          - { name: examples, label: Examples (optional bullet list), type: string, list: true }
+      - name: pricing
+        label: Pricing
+        type: object
+        fields:
+          - { name: eyebrow, label: Small label, type: string }
+          - { name: heading, label: Heading, type: string }
+          - name: prices
+            label: Price list
+            type: object
+            list: true
+            fields:
+              - { name: label, label: Item, type: string }
+              - { name: price, label: Price, type: string }
+          - { name: explanation, label: Explanation, type: text }
+          - { name: button, label: Button, type: string }
+  - name: services_ja
+    label: Services & pricing (日本語)
+    type: file
+    path: content/ja/services.yml
+    fields: *services_fields
+
+  # ------------------------------------------------------------- Contact
+  - name: contact_en
+    label: Contact (English)
+    type: file
+    path: content/en/contact.yml
+    fields: &contact_fields
+      - { name: eyebrow, label: Small label, type: string }
+      - { name: heading, label: Heading, type: string }
+      - { name: body, label: Text, type: text }
+      - { name: japanese, label: Japanese accent line, type: string }
+      - name: form
+        label: Form
+        type: object
+        fields:
+          - { name: name_label, label: Name label, type: string }
+          - { name: name_placeholder, label: Name placeholder, type: string }
+          - { name: email_label, label: Email label, type: string }
+          - { name: email_placeholder, label: Email placeholder, type: string }
+          - { name: message_label, label: Message label, type: string }
+          - { name: message_placeholder, label: Message placeholder, type: string }
+          - { name: setup_note, label: Notice above button (optional), type: text }
+          - { name: button, label: Button, type: string }
+          - { name: unavailable, label: Screen-reader note for disabled button, type: string }
+  - name: contact_ja
+    label: Contact (日本語)
+    type: file
+    path: content/ja/contact.yml
+    fields: *contact_fields

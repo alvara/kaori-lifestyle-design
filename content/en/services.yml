@@ -1,0 +1,49 @@
+masthead:
+  eyebrow: Services
+  japanese: 暮らしの空間を整える
+  heading: Practical support for your home.
+intro:
+  eyebrow: Current services
+  body: My main focus is Home Organizing and improving the use of existing living spaces. Mindful Living complements this practical work.
+services:
+  - name: Home Organizing
+    description: Support with decluttering, organizing belongings, improving storage, and making everyday spaces easier to use.
+    examples:
+      - Closet organization
+      - Kitchen organization
+      - Storage improvement
+      - Reviewing and organizing belongings
+      - Improving the functionality of existing spaces
+  - name: Space & Lifestyle Consulting
+    description: |-
+      Practical advice on how to make better use of existing living spaces, drawing on my 20+ years of kitchen and interior design experience.
+
+      The focus is on functionality, usability, storage, movement, and comfort.
+
+      This is not full interior design. I am not currently offering comprehensive interior design services, CAD drawings, 3D presentations, or full furniture and interior selection services.
+    examples: []
+  - name: Mindful Living
+    description: |-
+      Mindfulness, breathing awareness, yoga perspectives, and body awareness as complementary elements of everyday living.
+
+      This is not a standalone yoga studio service, medical treatment, or psychological counseling.
+    examples: []
+pricing:
+  eyebrow: The details
+  heading: Session pricing.
+  prices:
+    - label: One session (3 hours)
+      price: ¥39,600 (tax included)
+    - label: Additional time, 30 minutes
+      price: ¥6,600 (tax included)
+    - label: Additional time, 1 hour
+      price: ¥13,200 (tax included)
+    - label: Transportation expenses
+      price: Actual cost
+  explanation: |-
+    How much we can accomplish in three hours depends on the amount of belongings, the condition of the space, and the pace at which you feel comfortable making decisions.
+
+    I want us to work at a comfortable pace without rushing. We start with a three-hour session, and depending on how things go and what you would like to do, we can discuss extending the session or arranging another one.
+
+    Any additional time will only be added with your prior agreement.
+  button: Let's begin

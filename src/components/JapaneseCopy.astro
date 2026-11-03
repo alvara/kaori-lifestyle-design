@@ -1,0 +1,22 @@
+---
+// Japanese home copy block: first line of the first paragraph is the
+// "opening line", and a paragraph written as **text** is the English
+// concept line (Mind × Body × Space). Matches the original markup.
+import { paragraphs, conceptLine } from '../lib/content';
+interface Props { text?: string; class: string }
+const { text, class: cls } = Astro.props;
+const paras = paragraphs(text);
+---
+<div class={cls} lang="ja">
+  {paras.map((lines, i) => {
+    const concept = conceptLine(lines);
+    if (concept) return <p class="home-copy-concept" lang="en"><strong>{concept}</strong></p>;
+    return (
+      <p lang="ja">
+        {lines.map((l, j) => j === 0
+          ? <span class:list={[{ 'home-copy-opening-line': i === 0 }]}>{l}</span>
+          : <span><br />{l}</span>)}
+      </p>
+    );
+  })}
+</div>

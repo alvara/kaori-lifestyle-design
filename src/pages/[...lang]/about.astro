@@ -1,0 +1,49 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import { load, href, asset, langPaths, type Lang } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const c = load(lang, 'about');
+const site = load(lang, 'site');
+const srcset = [900, 1800, 3024].map((w) => `${asset(`images/kaori-portrait-${w}.webp`)} ${w}w`).join(', ');
+---
+<Base lang={lang} route="/about" title={site.nav.about}>
+  <section class="page-masthead about-masthead">
+    <div class="container-wide page-masthead-content">
+      <p class="eyebrow">{c.masthead.eyebrow}</p>
+      <p class="japanese mt-5">{c.masthead.japanese}</p>
+      <h1 class="display-xl mt-8">{c.masthead.heading}</h1>
+    </div>
+  </section>
+  <section class="section-pad">
+    <div class="container-wide">
+      <div class="about-story-grid">
+        <figure class="about-portrait">
+          <img sizes="(max-width: 800px) calc(100vw - 2.2rem), (min-width: 1248px) 461px, 40vw" alt={c.portrait_alt} srcset={srcset} src={asset('images/kaori-portrait-1800.webp')} />
+          <figcaption>{c.portrait_caption}</figcaption>
+        </figure>
+        <div class="story-copy about-story-copy">
+          <p class="eyebrow">{c.story.eyebrow}</p>
+          <Paragraphs text={c.story.body} firstClass="mt-8" />
+          <p class="story-signature">{c.story.signature}</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="wellness-panel section-pad">
+    <div class="container-wide editorial-grid">
+      <div>
+        <p class="eyebrow section-label">{c.mindful.eyebrow}</p>
+        <p class="japanese mt-5">{c.mindful.japanese}</p>
+      </div>
+      <div class="copy">
+        <h2 class="display-md">{c.mindful.heading}</h2>
+        <Paragraphs text={c.mindful.body} firstClass="mt-7" restClass="mt-5" />
+        <a href={href('/contact', lang)} class="button button-dark mt-9">{c.mindful.button}<Arrow /></a>
+      </div>
+      <p class="side-note">{(c.mindful.side_notes ?? []).map((n: string) => <span>{n}<br /></span>)}</p>
+    </div>
+  </section>
+</Base>

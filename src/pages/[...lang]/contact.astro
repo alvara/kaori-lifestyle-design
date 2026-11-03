@@ -1,0 +1,36 @@
+---
+import Base from '../../layouts/Base.astro';
+import Arrow from '../../components/Arrow.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import { load, langPaths, type Lang } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const c = load(lang, 'contact');
+const site = load(lang, 'site');
+const f = c.form;
+---
+<Base lang={lang} route="/contact" title={site.nav.contact}>
+  <section class="contact contact-page section-pad" aria-labelledby="contact-title">
+    <div class="container-wide">
+      <div class="contact-grid">
+        <div>
+          <p class="eyebrow">{c.eyebrow}</p>
+          <h1 id="contact-title" class="contact-lead mt-7">{c.heading}</h1>
+          <Paragraphs text={c.body} class="muted-copy mt-7 max-w-sm leading-7" />
+          <p class="japanese mt-8">{c.japanese}</p>
+        </div>
+        <div>
+          <!-- Email delivery is not wired yet (same as the original draft). -->
+          <form class="contact-form" onsubmit="return false">
+            <div class="field"><label for="contact-name">{f.name_label}</label><input id="contact-name" required placeholder={f.name_placeholder} name="name" /></div>
+            <div class="field"><label for="contact-email">{f.email_label}</label><input id="contact-email" required placeholder={f.email_placeholder} type="email" name="email" /></div>
+            <div class="field"><label for="contact-message">{f.message_label}</label><textarea id="contact-message" name="message" required placeholder={f.message_placeholder}></textarea></div>
+            {f.setup_note && <p class="contact-setup-note" role="note">{f.setup_note}</p>}
+            <button type="submit" class="button button-light mt-2 w-fit" disabled aria-describedby="contact-delivery-status">{f.button}<Arrow /></button>
+            <span class="sr-only" id="contact-delivery-status">{f.unavailable}</span>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</Base>

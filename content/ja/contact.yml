@@ -1,0 +1,14 @@
+eyebrow: はじめの一歩
+heading: あなたらしい、心地よい暮らしを一緒につくりませんか？
+body: 今の状況や、こうなったらいいなと思うことを聞かせてください。まだ言葉になっていなくても大丈夫です。一つひとつ、私が拝見します。
+japanese: お話ししましょう。
+form:
+  name_label: お名前
+  name_placeholder: お名前を入力してください
+  email_label: メールアドレス
+  email_placeholder: you@example.com
+  message_label: メッセージ
+  message_placeholder: どんなことに余白をつくりたいですか？
+  setup_note: 現在、メール送信機能は接続されていません。メールサービスの設定が完了するまで、このフォームからメッセージを送信することはできません。
+  button: 送信する
+  unavailable: メール送信機能の接続後に利用できます。

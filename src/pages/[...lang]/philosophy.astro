@@ -1,0 +1,37 @@
+---
+import Base from '../../layouts/Base.astro';
+import Paragraphs from '../../components/Paragraphs.astro';
+import { load, langPaths, type Lang } from '../../lib/content';
+export const getStaticPaths = langPaths;
+const { lang } = Astro.props as { lang: Lang };
+const c = load(lang, 'philosophy');
+const site = load(lang, 'site');
+---
+<Base lang={lang} route="/philosophy" title={site.nav.philosophy}>
+  <section class="page-masthead philosophy-masthead">
+    <div class="container-wide page-masthead-content">
+      <p class="eyebrow">{c.masthead.eyebrow}</p>
+      <p class="japanese mt-5">{c.masthead.japanese}</p>
+      <h1 class="display-xl mt-8">{c.masthead.heading}</h1>
+      <Paragraphs text={c.masthead.lead} class="body-lg mt-7 max-w-2xl" />
+    </div>
+  </section>
+  <section class="section-pad philosophy-detail">
+    <div class="container-wide">
+      <div class="philosophy-intro">
+        <p class="eyebrow">{c.intro.eyebrow}</p>
+        <h2 class="display-md">{c.intro.heading}</h2>
+        <Paragraphs text={c.intro.body} />
+      </div>
+      <div class="principles">
+        {(['mind', 'body', 'space'] as const).map((k) => (
+          <article class="principle">
+            <h3 class="principle-title">{k[0].toUpperCase() + k.slice(1)}</h3>
+            <p class="japanese">{c.principles[`${k}_japanese`]}</p>
+            <p class="principle-copy mt-4">{c.principles[k]}</p>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</Base>

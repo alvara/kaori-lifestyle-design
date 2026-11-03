@@ -1,0 +1,6 @@
+/* The original language toggle used <button>s with client-side state.
+   This site uses real links (/ and /ja/), so mirror the button styles. */
+.language-toggle a{color:currentColor;cursor:pointer;opacity:.7;background:0 0;border:0;padding:.35rem .15rem;transition:opacity .2s;text-decoration:none}
+.language-toggle a:hover,.language-toggle a.is-active{opacity:1}
+.language-toggle a:focus-visible{outline:2px solid hsl(var(--accent));outline-offset:4px}
+.site-footer .language-toggle a{color:#fbf8f4}

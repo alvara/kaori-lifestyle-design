@@ -1,0 +1,14 @@
+eyebrow: Let's begin
+heading: Let's create your balanced life.
+body: Tell me a little about where you are, what you are craving, or simply what has been on your mind. I read every note personally.
+japanese: お話ししましょう。
+form:
+  name_label: Name
+  name_placeholder: Your name
+  email_label: Email
+  email_placeholder: you@example.com
+  message_label: Message
+  message_placeholder: What would you like to make space for?
+  setup_note: Email delivery is not connected yet. This form cannot send a message until an email service is configured.
+  button: Send your note
+  unavailable: Unavailable until email delivery is connected.

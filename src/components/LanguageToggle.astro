@@ -1,0 +1,11 @@
+---
+import { href, type Lang } from '../lib/content';
+interface Props { lang: Lang; route: string }
+const { lang, route } = Astro.props;
+const label = lang === 'ja' ? '言語を変更' : 'Change language';
+---
+<div class="language-toggle" role="group" aria-label={label}>
+  <a href={href(route, 'en')} hreflang="en" class:list={[{ 'is-active': lang === 'en' }]} aria-current={lang === 'en' ? 'true' : undefined}>EN</a>
+  <span aria-hidden="true">/</span>
+  <a href={href(route, 'ja')} hreflang="ja" class:list={[{ 'is-active': lang === 'ja' }]} aria-current={lang === 'ja' ? 'true' : undefined}>JP</a>
+</div>

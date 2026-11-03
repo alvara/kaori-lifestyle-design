@@ -1,0 +1,75 @@
+---
+import { load, href, asset, type Lang } from '../lib/content';
+import LanguageToggle from '../components/LanguageToggle.astro';
+
+interface Props { lang: Lang; route: string; title?: string; mainId?: string }
+const { lang, route, title, mainId } = Astro.props;
+const site = load(lang, 'site');
+const pageTitle = title ? `${title} · ${site.meta_title}` : site.meta_title;
+const navItems = [
+  ['home', '/'], ['philosophy', '/philosophy'], ['about', '/about'],
+  ['services', '/services'], ['contact', '/contact'],
+] as const;
+const ja = lang === 'ja';
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={site.meta_description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={site.meta_description} />
+    <meta property="og:type" content="website" />
+    <link rel="alternate" hreflang="en" href={href(route, 'en')} />
+    <link rel="alternate" hreflang="ja" href={href(route, 'ja')} />
+    <link rel="icon" type="image/svg+xml" href={asset('favicon.svg')} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href={asset('styles/site.css')} />
+    <link rel="stylesheet" href={asset('styles/overrides.css')} />
+  </head>
+  <body>
+    <div class="site-shell">
+      <header class="site-nav">
+        <div class="container-wide flex items-center justify-between py-6">
+          <a href={href('/', lang)} class="brand-lockup text-inherit" aria-label="Kaori Lifestyle Design — Home">
+            <span class="brand-name">{site.brand_name}</span>
+            <span class="brand-mark">{site.brand_mark}</span>
+            <span class="brand-tagline">{site.brand_tagline}</span>
+          </a>
+          <LanguageToggle lang={lang} route={route} />
+          <button type="button" class="menu-toggle" aria-expanded="false" aria-controls="primary-navigation" aria-label={ja ? 'ナビゲーションを開閉' : 'Toggle navigation'}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu" aria-hidden="true"><path d="M4 5h16"></path><path d="M4 12h16"></path><path d="M4 19h16"></path></svg>
+          </button>
+          <nav id="primary-navigation" class="nav-links flex items-center gap-7" aria-label={ja ? 'メインナビゲーション' : 'Primary navigation'}>
+            {navItems.map(([key, r]) => (
+              <a href={href(r, lang)} class:list={['nav-link', { 'is-current': route === r }]} aria-current={route === r ? 'page' : undefined}>{site.nav[key]}</a>
+            ))}
+            <span class="nav-language-mobile"><LanguageToggle lang={lang} route={route} /></span>
+          </nav>
+        </div>
+      </header>
+      <main id={mainId} lang={lang}>
+        <slot />
+      </main>
+      <footer class="site-footer">
+        <div class="container-wide site-footer-inner">
+          <span>{site.footer.name}</span>
+          <span>{site.footer.concept}</span>
+          <span>{site.footer.locations}</span>
+          <LanguageToggle lang={lang} route={route} />
+        </div>
+      </footer>
+    </div>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const nav = document.getElementById('primary-navigation');
+      toggle?.addEventListener('click', () => {
+        const open = nav?.classList.toggle('open') ?? false;
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+    </script>
+  </body>
+</html>
