@@ -109,8 +109,49 @@ public/images/              photos from the original design
 1. Add the domain under **Settings → Pages** and a `public/CNAME` file.
 2. Set repository variables `BASE_PATH=/` and `SITE_URL=https://<domain>`.
 
-## Open items
+## Status
 
-- The contact form is a placeholder. Email delivery is not connected (same as
-  the original draft). Pick a form service before launch.
-- The client's GitHub account and repo access are not set up yet.
+Live at <https://alvara.github.io/kaori-lifestyle-design/>. All five pages in
+EN and JA are ported and match the Replit draft at 1440px and 390px. Pages CMS
+config is in place and every content key has a CMS field.
+
+Decided by the site owner (Jesse):
+
+- Hosting is GitHub Pages only. No Vercel.
+- Editing is Pages CMS with GitHub login, copy only. No database.
+- The repo stays public under `alvara` for now.
+
+## To do (later)
+
+None of these are decided yet. Confirm the approach with Jesse before building.
+
+- [ ] **Client access.** Kaori needs a GitHub account with write access, then a
+  first sign-in at app.pagescms.org. GitHub may require two-factor login; plan
+  a short call to walk her through it. Write her a one-page guide with
+  screenshots.
+- [ ] **Shared organization.** Proposal: move the repo into a free GitHub org
+  owned by both Kaori and Jesse, so she owns her site long-term. Use
+  **Settings → Transfer**. After the move, the Pages URL becomes
+  `https://<org>.github.io/kaori-lifestyle-design/` unless a custom domain is
+  set. The workflow derives `SITE` and `BASE` from the repo, so no code change
+  is needed. Re-select the repo in Pages CMS afterward.
+- [ ] **Custom domain.** Follow the *Custom domain* steps above: DNS records,
+  `public/CNAME`, and the `BASE_PATH` / `SITE_URL` repo variables.
+- [ ] **Contact form email.** `src/pages/[...lang]/contact.astro` renders a
+  disabled form with a notice (`form.setup_note` in `content/*/contact.yml`).
+  The site is static, so it needs a hosted form endpoint. Candidates:
+  Formspree, Web3Forms, Basin. To ship: set the form `action` and `method`,
+  enable the button, drop `onsubmit="return false"`, clear `setup_note` in both
+  languages, and add a thank-you state. Keep any API key client-safe (these
+  services use public form IDs).
+
+## Notes for agents
+
+- Use Node 22.23+ (`nvm use` reads `.nvmrc`). The default Node 20 on Jesse's
+  machine fails with "Node.js v20 is not supported by Astro".
+- `public/styles/site.css` is the original draft's compiled Tailwind output.
+  Markup must keep the original class names, or styles break. Only utilities
+  already present in that file work; check with `grep` before using a new one.
+- Keep `content/en` and `content/ja` files the same shape, and keep
+  `.pages.yml` fields in sync with their keys.
+- Commit attribution and copy register follow the repo owner's global rules.
